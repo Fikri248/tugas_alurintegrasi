@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = "C:\laragon\bin\python\python-3.10;C:\laragon\bin\python\python-3.10\Scripts;C:\Program Files\Docker\Docker\resources\bin;%PATH%"
+        PATH = 'C:\\laragon\\bin\\python\\python-3.10;C:\\laragon\\bin\\python\\python-3.10\\Scripts;C:\\Program Files\\Docker\\Docker\\resources\\bin;%PATH%'
         IMAGE_NAME = 'mohamadfikriisfahani/simple-app'
         REGISTRY_CREDENTIALS = '25'
     }
