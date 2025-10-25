@@ -1,56 +1,44 @@
 pipeline {
     agent any
-    
+
     environment {
         IMAGE_NAME = "mohamadfikriisfahani/simple-app"
-        REGISTRY = "https://index.docker.io/v1/"
         REGISTRY_CREDENTIALS = "25"
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
         stage('Build') {
             steps {
-                sh 'echo "Mulai build aplikasi"'
+                bat 'echo Mulai build aplikasi'
             }
         }
-        
         stage('Unit Test') {
             steps {
-                sh '''
-                    echo "Menjalankan Unit Test dengan pytest..."
-                    pip install -r requirements.txt
-                    pytest test_app.py -v
-                '''
+                bat 'pip install -r requirements.txt'
+                bat 'pytest test_app.py -v'
             }
         }
-        
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
-                }
+                bat 'docker build -t %IMAGE_NAME%:%BUILD_NUMBER% .'
+                bat 'docker tag %IMAGE_NAME%:%BUILD_NUMBER% %IMAGE_NAME%:latest'
             }
         }
-        
         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry(REGISTRY, REGISTRY_CREDENTIALS) {
-                        def customImage = docker.image("${IMAGE_NAME}:${env.BUILD_NUMBER}")
-                        customImage.push()
-                        customImage.push('latest')
-                    }
+                withCredentials([usernamePassword(credentialsId: "${REGISTRY_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat 'docker push %IMAGE_NAME%:%BUILD_NUMBER%'
+                    bat 'docker push %IMAGE_NAME%:latest'
                 }
             }
         }
     }
-    
     post {
         always {
             echo "Pipeline selesai"
