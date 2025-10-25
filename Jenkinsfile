@@ -24,6 +24,13 @@ pipeline {
                 bat 'C:\\laragon\\bin\\python\\python-3.10\\python.exe -m pytest test_app.py -v'
             }
         }
+        stage('Debug Docker Credential') {
+            steps {
+                bat 'echo %PATH%'
+                bat 'where docker-credential-wincred.exe'
+                bat 'where docker.exe'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" build -t %IMAGE_NAME%:%BUILD_NUMBER% .'
