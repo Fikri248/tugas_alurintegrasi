@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = 'C:\\laragon\\bin\\python\\python-3.10;C:\\laragon\\bin\\python\\python-3.10\\Scripts;%PATH%'
+        PATH = "C:\laragon\bin\python\python-3.10;C:\laragon\bin\python\python-3.10\Scripts;C:\Program Files\Docker\Docker\resources\bin;%PATH%"
         IMAGE_NAME = 'mohamadfikriisfahani/simple-app'
         REGISTRY_CREDENTIALS = '25'
     }
@@ -22,13 +22,6 @@ pipeline {
             steps {
                 bat 'C:\\laragon\\bin\\python\\python-3.10\\Scripts\\pip.bat install -r requirements.txt'
                 bat 'C:\\laragon\\bin\\python\\python-3.10\\python.exe -m pytest test_app.py -v'
-            }
-        }
-        stage('Debug Docker Credential') {
-            steps {
-                bat 'echo %PATH%'
-                bat 'where docker-credential-wincred.exe'
-                bat 'where docker.exe'
             }
         }
         stage('Build Docker Image') {
