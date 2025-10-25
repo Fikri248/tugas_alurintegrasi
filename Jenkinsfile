@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "mohamadfikriisfahani/simple-app"
-        REGISTRY_CREDENTIALS = "25"
+        IMAGE_NAME = 'mohamadfikriisfahani/simple-app'
+        REGISTRY_CREDENTIALS = '25'
     }
 
     stages {
@@ -19,8 +19,8 @@ pipeline {
         }
         stage('Unit Test') {
             steps {
-                bat 'pip install -r requirements.txt'
-                bat 'pytest test_app.py -v'
+                bat 'C:\\laragon\\bin\\python\\python-3.10\\Scripts\\pip.bat install -r requirements.txt'
+                bat 'C:\\laragon\\bin\\python\\python-3.10\\python.exe -m pytest test_app.py -v'
             }
         }
         stage('Build Docker Image') {
@@ -41,13 +41,13 @@ pipeline {
     }
     post {
         always {
-            echo "Pipeline selesai"
+            echo 'Pipeline selesai'
         }
         success {
-            echo "✅ Build dan Test berhasil! Image berhasil di-push ke Docker Hub"
+            echo '✅ Build dan Test berhasil! Image berhasil di-push ke Docker Hub'
         }
         failure {
-            echo "❌ Pipeline gagal! Cek log untuk detail error"
+            echo '❌ Pipeline gagal! Cek log untuk detail error'
         }
     }
 }
