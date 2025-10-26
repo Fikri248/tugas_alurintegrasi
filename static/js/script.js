@@ -2,13 +2,11 @@ let currentInput = '';
 let expression = '';
 let result = '0';
 
-// Update display
 function updateDisplay() {
     document.getElementById('expression').textContent = expression;
     document.getElementById('result').textContent = result;
 }
 
-// Append number
 function appendNumber(num) {
     if (currentInput === '0' && num !== '.') {
         currentInput = num;
@@ -20,7 +18,6 @@ function appendNumber(num) {
     updateDisplay();
 }
 
-// Append operator
 function appendOperator(op) {
     if (currentInput !== '') {
         currentInput += op;
@@ -29,10 +26,8 @@ function appendOperator(op) {
     }
 }
 
-// Calculate
 function calculate() {
     try {
-        // Replace × with * for evaluation
         let evalExpression = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
         let calculatedResult = eval(evalExpression);
         result = calculatedResult.toString();
@@ -45,7 +40,6 @@ function calculate() {
     }
 }
 
-// Clear all
 function clearAll() {
     currentInput = '';
     expression = '';
@@ -53,7 +47,6 @@ function clearAll() {
     updateDisplay();
 }
 
-// Backspace
 function backspace() {
     currentInput = currentInput.slice(0, -1);
     if (currentInput === '') {
@@ -66,11 +59,9 @@ function backspace() {
     updateDisplay();
 }
 
-// Dark mode toggle
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('change', function() {
     document.body.classList.toggle('dark-mode');
 });
 
-// Initialize display
 updateDisplay();

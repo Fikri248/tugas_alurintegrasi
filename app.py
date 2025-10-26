@@ -6,7 +6,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# Function untuk testing
 def add(a, b):
     return a + b
 
